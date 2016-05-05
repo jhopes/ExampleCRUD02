@@ -4,7 +4,15 @@ package Modell;
  * Created by docente05 on 20/04/2016.
  */
 public class User {
-    private String name_user, email, password, confirmpw;
+    private String id, name_user, email, password, confirmpw;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName_user() {
         return name_user;

@@ -80,6 +80,22 @@
         android:gravity="center_horizontal">
 
         <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:id="@+id/BtnSearch"
+            android:onClick="setOnClickListenerSearch" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upd"
+            android:id="@+id/BtnUpd"
+            android:onClick="setOnClickListenerUpdate" />
+
+        <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -92,8 +108,8 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ir"
-            android:id="@+id/BtnIr"
+            android:text="Go"
+            android:id="@+id/BtnGo"
             android:layout_gravity="center_horizontal"
             android:textStyle="bold" />
 

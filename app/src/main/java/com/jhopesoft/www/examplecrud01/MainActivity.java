@@ -1,7 +1,11 @@
 package com.jhopesoft.www.examplecrud01;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,7 +24,9 @@ import Modell.User;
 public class MainActivity extends AppCompatActivity {
 
     EditText user, email, pw, cpw;
-    Button btnsave, btnir;
+    Button btnsave, btnir, btnsearch;
+    User u;
+    ClsUser cu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +38,15 @@ public class MainActivity extends AppCompatActivity {
         pw = (EditText) findViewById(R.id.EdtPw);
         cpw = (EditText) findViewById(R.id.EdtCPw);
         btnsave = (Button) findViewById(R.id.BtnSave);
-        btnir = (Button) findViewById(R.id.BtnIr);
+        btnir = (Button) findViewById(R.id.BtnGo);
+        //btnsearch = (Button) findViewById(R.id.BtnSearch);
+         u = new User();
+         cu = new ClsUser(MainActivity.this);
+
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                User u = new User();
-                ClsUser cu = new ClsUser(MainActivity.this);
+
 
                 u.setName_user(user.getText().toString());
                 u.setEmail(email.getText().toString());
@@ -61,5 +70,48 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void setOnClickListenerSearch(View v){
+        u.setName_user(user.getText().toString());
+        Cursor listuser = cu.searchUser(u);
+        if(listuser.moveToFirst()){
+            email.setText(listuser.getString(2).toString());
+            pw.setText(listuser.getString(3).toString());
+            cpw.setText(listuser.getString(3).toString());
+        }else{
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(MainActivity.this);
+
+            builder.setMessage("El usuario no existe.").setTitle("Información");
+            builder.create().show();
+        }
+    }
+    public void setOnClickListenerUpdate(View v){
+        //actualizar
+        u.setName_user(user.getText().toString());
+        u.setEmail(email.getText().toString());
+        u.setPassword(pw.getText().toString());
+        if(cpw.getText().toString().equals(pw.getText().toString())) {
+            if (cu.UpdateUser(u)) {
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(MainActivity.this);
+
+                builder.setMessage("Succesfull update").setTitle("Información");
+                builder.create().show();
+            }
+            else{
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(MainActivity.this);
+
+                builder.setMessage("Error de actualización").setTitle("Información");
+                builder.create().show();
+            }
+        }else{
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(MainActivity.this);
+
+            builder.setMessage("Error de coincidencia de pw").setTitle("Información");
+            builder.create().show();
+        }
+    }
 
 }
